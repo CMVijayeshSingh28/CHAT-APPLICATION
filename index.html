@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Chat</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
+</head>
+<body>
+    <div class="chat-container">
+        <h1 class="chat-header">Real-Time Chat</h1>
+        <!-- Display chat messages in this list -->
+        <ul id="messages" class="messages-list"></ul>
+        
+        <!-- Input field for new messages and send button -->
+        <div class="input-container">
+            <input id="message-input" class="message-input" autocomplete="off" placeholder="Type a message..." />
+            <button id="send-button" class="send-button">Send</button>
+        </div>
+    </div>
+
+    <!-- Include the Socket.IO client-side library -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+        // Initialize the Socket.IO connection
+        const socket = io();
+
+        // Get references to the input field, button, and messages list
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const messagesList = document.getElementById('messages');
+
+        // Send message when the Send button is clicked
+        sendButton.addEventListener('click', () => {
+            const message = messageInput.value;
+
+            // If the message is not empty, emit it to the server
+            if (message.trim() !== '') {
+                socket.emit('chat message', message);
+                messageInput.value = ''; // Clear the input field
+            }
+        });
+
+        // Listen for new chat messages from the server
+        socket.on('chat message', (msg) => {
+            const newMessage = document.createElement('li');
+            newMessage.classList.add('message-item');
+            newMessage.textContent = msg;
+            messagesList.appendChild(newMessage); // Add new message to the list
+        });
+    </script>
+</body>
+</html>
