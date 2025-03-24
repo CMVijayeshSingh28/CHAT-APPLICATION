@@ -54,6 +54,9 @@ The tools and technologies used provide a strong foundation for building scalabl
 
 #OUTPUT
 
+<img width="1440" alt="Image" src="https://github.com/user-attachments/assets/37eb785b-c787-48ae-a0bb-05499e8566ee" />
+
+
 
 
 
